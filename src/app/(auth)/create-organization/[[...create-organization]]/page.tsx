@@ -1,7 +1,8 @@
-import { OrganizationButton } from '@/components/auth-buttons'
+import { OrganizationButton, UserButton } from '@/components/auth-buttons'
 import { OrgControl } from '@/components/authenticated'
 import { Icons } from '@/components/icons'
 import { Box, Container, Flex, Heading, Section } from '@radix-ui/themes'
+import Link from 'next/link'
 
 export default function Home() {
 	return (
@@ -9,7 +10,12 @@ export default function Home() {
 			<Container px={'5'}>
 				<Flex width={'100%'} py={'4'} align={'center'} justify={'between'}>
 					<Box>
-						<Icons.Logo />
+						<Link href="/">
+							<Icons.Logo />
+						</Link>
+					</Box>
+					<Box>
+						<UserButton />
 					</Box>
 				</Flex>
 			</Container>
