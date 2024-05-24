@@ -5,7 +5,7 @@ import { useAuth } from '@clerk/nextjs'
 import { Skeleton } from '@radix-ui/themes'
 import { useConvexAuth } from 'convex/react'
 import { PropsWithChildren } from 'react'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 export function Authenticated({
 	children,
@@ -21,7 +21,8 @@ export function Authenticated({
 export function RequiresOrg({ children }: PropsWithChildren) {
 	const { isLoading } = useConvexAuth()
 	const user = useAuth()
-	if (!isLoading && !user.orgId) redirect('/create-organization')
+	const router = useRouter()
+	if (!isLoading && !user.orgId) router.push('/create-organization')
 	return <Skeleton loading={isLoading}>{user.orgId && children}</Skeleton>
 }
 

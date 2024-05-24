@@ -36,7 +36,7 @@ export function Sidebar() {
 			<Link href="/">
 				<Icons.Logo />
 			</Link>
-			<OrganizationButton />
+			<OrganizationButton afterLeaveOrganizationUrl="/create-organization" />
 			<SidebarMenu />
 		</Flex>
 	)

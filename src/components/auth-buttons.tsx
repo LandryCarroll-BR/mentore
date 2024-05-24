@@ -23,7 +23,17 @@ export function SignInAndSignUpButtons() {
 	)
 }
 
-export function OrganizationButton() {
+export function OrganizationButton({
+	afterLeaveOrganizationUrl,
+	afterCreateOrganizationUrl,
+	afterSelectOrganizationUrl,
+	afterSelectPersonalUrl,
+}: {
+	afterLeaveOrganizationUrl?: string
+	afterCreateOrganizationUrl?: string
+	afterSelectOrganizationUrl?: string
+	afterSelectPersonalUrl?: string
+}) {
 	return (
 		<Authenticated>
 			<Box
@@ -35,7 +45,10 @@ export function OrganizationButton() {
 				<OrganizationSwitcher
 					hidePersonal
 					skipInvitationScreen
-					afterLeaveOrganizationUrl="/create-organization"
+					afterLeaveOrganizationUrl={afterLeaveOrganizationUrl}
+					afterCreateOrganizationUrl={afterCreateOrganizationUrl}
+					afterSelectOrganizationUrl={afterSelectOrganizationUrl}
+					afterSelectPersonalUrl={afterSelectPersonalUrl}
 					appearance={{
 						elements: {
 							button: {
@@ -44,7 +57,6 @@ export function OrganizationButton() {
 							},
 						},
 					}}
-					defaultOpen
 				/>
 			</Box>
 		</Authenticated>

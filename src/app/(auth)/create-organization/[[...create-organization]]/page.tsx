@@ -25,9 +25,11 @@ export default function Home() {
 						Select or Create an Organization
 					</Heading>
 					<Flex justify={'center'}>
-						<OrgControl afterOrganizationUrl="/dashboard">
-							<OrganizationButton />
-						</OrgControl>
+						<OrganizationButton
+							afterCreateOrganizationUrl="/dashboard"
+							afterLeaveOrganizationUrl="/dashboard"
+							afterSelectOrganizationUrl="/dashboard"
+						/>
 					</Flex>
 				</Container>
 			</Section>

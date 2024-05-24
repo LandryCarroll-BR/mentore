@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Theme } from '@radix-ui/themes'
 import '@radix-ui/themes/styles.css'
 import '@/styles/globals.css'
+import { ClerkProviders } from '@/components/providers'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
@@ -15,12 +16,14 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
-			<body>
-				<Theme accentColor="jade" radius="large">
-					{children}
-				</Theme>
-			</body>
-		</html>
+		<ClerkProviders>
+			<html lang="en">
+				<body>
+					<Theme accentColor="jade" radius="large">
+						{children}
+					</Theme>
+				</body>
+			</html>
+		</ClerkProviders>
 	)
 }
