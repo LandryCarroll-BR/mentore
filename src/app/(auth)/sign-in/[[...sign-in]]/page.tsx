@@ -5,7 +5,7 @@ import { Box, Container, Flex, Section } from '@radix-ui/themes'
 export default function Home() {
 	return (
 		<main>
-			<Container>
+			<Container px={'5'}>
 				<Flex width={'100%'} py={'4'} align={'center'} justify={'between'}>
 					<Box>
 						<Icons.Logo />
