@@ -35,6 +35,7 @@ export function OrganizationButton() {
 				<OrganizationSwitcher
 					hidePersonal
 					skipInvitationScreen
+					afterLeaveOrganizationUrl="/create-organization"
 					appearance={{
 						elements: {
 							button: {

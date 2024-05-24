@@ -27,10 +27,10 @@ export function RequiresOrg({ children }: PropsWithChildren) {
 
 export function OrgControl({
 	children,
-	afterCreateOrganizationUrl,
-}: PropsWithChildren<{ afterCreateOrganizationUrl: string }>) {
+	afterOrganizationUrl,
+}: PropsWithChildren<{ afterOrganizationUrl: string }>) {
 	const { isLoading } = useConvexAuth()
 	const user = useAuth()
-	if (!isLoading && user.orgId) return redirect(afterCreateOrganizationUrl)
+	if (!isLoading && user.orgId) return redirect(afterOrganizationUrl)
 	return <Skeleton loading={isLoading}>{!user.orgId && children}</Skeleton>
 }
