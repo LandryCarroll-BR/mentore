@@ -9,11 +9,11 @@ export default function Home() {
 				<Heading as="h1">Overview</Heading>
 				<Grid columns={'2'} my={'4'}>
 					<Box gridColumnStart={'1'} gridColumnEnd={'3'}>
-						<Authenticated allowedRoles={[Role.Mentor, Role.Admin]}>
+						{/* <Authenticated allowedRoles={[Role.Mentor, Role.Admin]}>
 							<Card>
 								<Text>Hello Org</Text>
 							</Card>
-						</Authenticated>
+						</Authenticated> */}
 					</Box>
 				</Grid>
 			</Container>
