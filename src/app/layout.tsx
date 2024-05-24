@@ -4,6 +4,7 @@ import '@radix-ui/themes/styles.css'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
+	metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
 	title: 'Mentore',
 	description: 'We use technology to build bridges.',
 }
