@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<main>
 			<Container px={'5'}>
-				<Flex width={'100%'} py={'4'} align={'center'} justify={'between'}>
+				<Flex py={'4'} align={'center'} justify={'between'}>
 					<Box>
 						<Icons.Logo />
 					</Box>

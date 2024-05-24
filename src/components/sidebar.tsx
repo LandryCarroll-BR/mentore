@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Theme } from '@radix-ui/themes'
+import { Box, Button, Dialog, Flex, Popover, Theme } from '@radix-ui/themes'
 import { OrganizationButton } from '@/components/auth-buttons'
 import { Icons } from '@/components/icons'
 import { DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons'
@@ -36,6 +36,7 @@ export function Sidebar() {
 			<Link href="/">
 				<Icons.Logo />
 			</Link>
+			<OrganizationButton />
 			<SidebarMenu />
 		</Flex>
 	)
@@ -43,24 +44,27 @@ export function Sidebar() {
 
 export function MobileSidebar() {
 	return (
-		<Sheet>
-			<SheetTrigger asChild>
+		<Popover.Root>
+			<Popover.Trigger>
 				<Button variant="ghost" color="gray">
 					<HamburgerMenuIcon />
 					Menu
 				</Button>
-			</SheetTrigger>
-			<SheetContent side={'left'}>
-				<Box className="my-4">
-					<Link href="/">
-						<Icons.Logo />
-					</Link>
-				</Box>
-				<Button variant="soft" color="gray" className="justify-start px-3 py-1 rounded-lg gap-2">
-					<DashboardIcon />
-					Overview
-				</Button>
-			</SheetContent>
-		</Sheet>
+			</Popover.Trigger>
+			<Popover.Content>
+				<Flex className="flex-col gap-3 flex">
+					<Box>
+						<Link href="/">
+							<Icons.Logo />
+						</Link>
+					</Box>
+					<OrganizationButton />
+					<Button variant="soft" color="gray" className="justify-start px-3 py-1 rounded-lg gap-2">
+						<DashboardIcon />
+						Overview
+					</Button>
+				</Flex>
+			</Popover.Content>
+		</Popover.Root>
 	)
 }

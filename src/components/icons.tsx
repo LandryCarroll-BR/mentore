@@ -10,7 +10,7 @@ export const Icons = {
 			viewBox="0 0 426 78"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			className={cn('h-4 w-fit fill-graydark-2', props.className)}
+			className={cn('h-4 !w-fit fill-graydark-2', props.className)}
 			{...props}
 		>
 			<g clipPath="url(#clip0_1_4)">

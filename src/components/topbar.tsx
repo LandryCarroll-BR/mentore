@@ -1,6 +1,5 @@
-import { Box, Button, Flex } from '@radix-ui/themes'
+import { Box, Flex } from '@radix-ui/themes'
 import { UserButton } from './auth-buttons'
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { MobileSidebar } from './sidebar'
 
 export function Topbar() {
