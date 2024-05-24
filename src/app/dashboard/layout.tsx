@@ -14,15 +14,15 @@ export default function DashboardLayout({
 }>) {
 	return (
 		<ClerkProviders>
-			{/* <RequiresOrg> */}
-			<Flex minHeight={'100vh'}>
-				<Sidebar />
-				<Flex direction={'column'} flexGrow={'1'} p={'5'}>
-					<Topbar />
-					<div>{children}</div>
+			<RequiresOrg>
+				<Flex minHeight={'100vh'}>
+					<Sidebar />
+					<Flex direction={'column'} flexGrow={'1'} p={'5'}>
+						<Topbar />
+						<div>{children}</div>
+					</Flex>
 				</Flex>
-			</Flex>
-			{/* </RequiresOrg> */}
+			</RequiresOrg>
 		</ClerkProviders>
 	)
 }
