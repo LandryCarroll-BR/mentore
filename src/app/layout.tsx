@@ -7,9 +7,6 @@ export const metadata: Metadata = {
 	metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
 	title: 'Mentore',
 	description: 'We use technology to build bridges.',
-	openGraph: {
-		images: '/opengraph-image.png',
-	},
 }
 
 export default function RootLayout({
