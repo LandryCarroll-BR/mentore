@@ -12,6 +12,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from './sheet'
+import { Icon } from '@radix-ui/themes/src/components/callout.jsx'
+import Link from 'next/link'
 
 export function SidebarMenu() {
 	return (
@@ -31,6 +33,9 @@ export function Sidebar() {
 			minWidth={'240px'}
 			className="border-r bg-sage-1 border-sage-6 hidden md:flex"
 		>
+			<Link href="/">
+				<Icons.Logo />
+			</Link>
 			<SidebarMenu />
 		</Flex>
 	)
@@ -46,6 +51,11 @@ export function MobileSidebar() {
 				</Button>
 			</SheetTrigger>
 			<SheetContent side={'left'}>
+				<Box className="my-4">
+					<Link href="/">
+						<Icons.Logo />
+					</Link>
+				</Box>
 				<Button variant="soft" color="gray" className="justify-start px-3 py-1 rounded-lg gap-2">
 					<DashboardIcon />
 					Overview
