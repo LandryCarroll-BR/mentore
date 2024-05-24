@@ -4,5 +4,5 @@ module.exports = {
 	theme: {
 		extend: {},
 	},
-	plugins: [require('tailwindcss-radix-colors')],
+	plugins: [require('tailwindcss-radix-colors'), require('tailwindcss-animate')],
 }

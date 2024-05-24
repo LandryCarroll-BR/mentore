@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 	description: 'We use technology to build bridges.',
 	openGraph: {
 		type: 'website',
-		url: '/opengraph-image',
+		url: 'https://mentore.vercel.app/opengraph-image',
 		title: 'Mentore',
 		description: 'We use technology to build bridges.',
 	},

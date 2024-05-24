@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<main>
 			<Container>
-				<Flex width={'100%'} py={'4'} align={'center'} justify={'between'}>
+				<Flex width={'100%'} py={'4'} px={'5'} align={'center'} justify={'between'}>
 					<Box>
 						<Icons.Logo />
 					</Box>
@@ -17,13 +17,19 @@ export default function Home() {
 			</Container>
 			<Section>
 				<Container>
-					<Flex align={'center'} justify={'center'} gap={'5'} direction={'column'}>
+					<Flex align={'center'} justify={'center'} gap={'5'} direction={'column'} px={'5'}>
 						<Box>
 							<Box maxWidth={'500px'}>
-								<Heading as="h1" align={'center'} size={'9'} mb={'4'} wrap={'balance'}>
+								<Heading
+									as="h1"
+									align={'center'}
+									size={{ initial: '8', sm: '9' }}
+									mb={'4'}
+									wrap={'balance'}
+								>
 									We use technology to build bridges.
 								</Heading>
-								<Text as="p" align={'center'} size={'5'} wrap={'balance'}>
+								<Text as="p" align={'center'} size={{ initial: '3', sm: '5' }} wrap={'balance'}>
 									Our platform fosters mentorship for people in correctional facilities,
 									transforming lives.
 								</Text>
