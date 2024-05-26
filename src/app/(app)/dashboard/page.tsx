@@ -28,7 +28,7 @@ export default async function Home() {
 
 	return (
 		<main>
-			<Container>
+			<Container pt={{ initial: '4', md: '0' }}>
 				<Authenticated personalOnly>
 					<Flex direction={'column'} justify={'center'} align={'center'} gap={'2'}>
 						<Heading as="h1">{greeting}</Heading>
@@ -40,9 +40,6 @@ export default async function Home() {
 				<Authenticated allowedRoles={[Role.Applicant]}>
 					<Heading as="h1" mb={'4'}>
 						{greeting}
-					</Heading>
-					<Heading as="h2" size="2" mb={'2'}>
-						Reference Status
 					</Heading>
 					<Suspense>
 						<MentorFormStatus />

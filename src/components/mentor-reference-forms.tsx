@@ -1,6 +1,6 @@
 import { api } from '@/convex/_generated/api'
 import { auth, currentUser } from '@clerk/nextjs/server'
-import { CheckIcon } from '@radix-ui/react-icons'
+import { CheckIcon, EyeOpenIcon } from '@radix-ui/react-icons'
 import { Dialog, Button, Card, Flex, Grid, Heading, Text, DataList, Badge } from '@radix-ui/themes'
 import { fetchQuery } from 'convex/nextjs'
 import { MentorReferenceform } from './organization-sign-up-form'
@@ -20,19 +20,21 @@ export async function MentorReferenceForms({
 		externalOrgId: session.orgId,
 	})
 	return (
-		<Grid columns={'2'} gap={'4'}>
+		<Grid columns={{ initial: '1', md: '2' }} gap={'4'}>
 			{referenceForms
 				.filter((form) => (byCurrentUserEmail ? form.referenceEmail === userEmail : true))
 				.map((form) => (
 					<Card key={form._id}>
-						<Flex justify={'between'} align={'center'}>
+						<Flex
+							direction={{ initial: 'column', md: 'row' }}
+							justify={'between'}
+							align={{ initial: 'start', md: 'center' }}
+							gap={'3'}
+						>
 							<Flex direction={'column'}>
 								<Heading as="h3" size="3">
-									{form.firstName}
+									{form.firstName} {form.lastName}
 								</Heading>
-								<Text size={'2'} color="gray">
-									{form.email}
-								</Text>
 							</Flex>
 							<Dialog.Root>
 								<Authenticated allowedRoles={[Role.Reference]}>
@@ -53,7 +55,7 @@ export async function MentorReferenceForms({
 								</Authenticated>
 
 								<Authenticated allowedRoles={[Role.Admin]}>
-									<Dialog.Content maxWidth="450px">
+									<Dialog.Content>
 										<Dialog.Title>{form.firstName}</Dialog.Title>
 										<DataList.Root>
 											<DataList.Item>

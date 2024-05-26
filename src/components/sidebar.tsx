@@ -82,11 +82,7 @@ export function MobileSidebar() {
 							<Icons.Logo />
 						</Link>
 					</Box>
-					<OrganizationButton />
-					<Button variant="soft" color="gray" className="justify-start px-3 py-1 rounded-lg gap-2">
-						<DashboardIcon />
-						Overview
-					</Button>
+					<SidebarMenu />
 				</Flex>
 			</Popover.Content>
 		</Popover.Root>
