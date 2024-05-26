@@ -1,26 +1,41 @@
-import { Box, Button, Dialog, Flex, Popover, Theme } from '@radix-ui/themes'
+'use client'
+
+import { Box, Button, Flex, Popover } from '@radix-ui/themes'
 import { OrganizationButton } from '@/components/auth-buttons'
 import { Icons } from '@/components/icons'
-import { DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons'
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from './sheet'
-import { Icon } from '@radix-ui/themes/src/components/callout.jsx'
+import { DashboardIcon, EnvelopeClosedIcon, HamburgerMenuIcon } from '@radix-ui/react-icons'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export function SidebarMenu() {
+	const pathname = usePathname()
+	const isActive = (path: string) => pathname === path
+	const links = [
+		{ href: '/dashboard', icon: <DashboardIcon />, label: 'Overview' },
+		// { href: '/dashboard/invitations', icon: <EnvelopeClosedIcon />, label: 'Invitations' },
+	]
 	return (
-		<Button variant="soft" color="gray" className="justify-start">
-			<DashboardIcon />
-			Overview
-		</Button>
+		<>
+			{links.map((link) => (
+				<Button
+					key={link.href}
+					variant="soft"
+					color="gray"
+					className={cn(
+						'justify-start',
+						!isActive(link.href) && 'bg-transparent hover:bg-accent-3'
+					)}
+					asChild
+				>
+					<Link href={link.href}>
+						{link.icon}
+						{link.label}
+					</Link>
+				</Button>
+			))}
+		</>
 	)
 }
 
@@ -28,15 +43,17 @@ export function Sidebar() {
 	return (
 		<Flex
 			direction={'column'}
-			gap={'4'}
+			gap={'2'}
 			p={'5'}
 			minWidth={'240px'}
-			className="border-r bg-sage-1 border-sage-6 hidden md:flex"
+			className="border-r bg-gray-1 border-gray-6 hidden md:flex"
 		>
-			<Link href="/">
-				<Icons.Logo />
-			</Link>
-			<OrganizationButton afterLeaveOrganizationUrl="/create-organization" />
+			<Box mb={'3'}>
+				<Link href="/">
+					<Icons.Logo />
+				</Link>
+			</Box>
+			<OrganizationButton afterLeaveOrganizationUrl="/dashboard" />
 			<SidebarMenu />
 		</Flex>
 	)

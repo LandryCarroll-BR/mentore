@@ -10,8 +10,8 @@ http.route({
 	path: '/clerk-users-webhook',
 	method: 'POST',
 	handler: httpAction(async (ctx, request) => {
-		const wh = new Webhook(process.env.CLERK_WEBHOOK_USERS_SECRET!)
-		const event = await validateRequest(request, wh)
+		const webhook = new Webhook(process.env.CLERK_WEBHOOK_USERS_SECRET!)
+		const event = await validateRequest(request, webhook)
 		if (!event) {
 			return new Response('Error occured', { status: 400 })
 		}
@@ -40,8 +40,8 @@ http.route({
 	path: '/clerk-organizations-webhook',
 	method: 'POST',
 	handler: httpAction(async (ctx, request) => {
-		const wh = new Webhook(process.env.CLERK_WEBHOOK_ORG_SECRET!)
-		const event = await validateRequest(request, wh)
+		const webhook = new Webhook(process.env.CLERK_WEBHOOK_ORG_SECRET!)
+		const event = await validateRequest(request, webhook)
 		if (!event) {
 			return new Response('Error occured', { status: 400 })
 		}
@@ -66,7 +66,71 @@ http.route({
 	}),
 })
 
-async function validateRequest(req: Request, wh: Webhook): Promise<WebhookEvent | null> {
+http.route({
+	path: '/clerk-organization-invitations-webhook',
+	method: 'POST',
+	handler: httpAction(async (ctx, request) => {
+		const webhook = new Webhook(process.env.CLERK_WEBHOOK_ORG_INVITATION_SECRET!)
+		const event = await validateRequest(request, webhook)
+		if (!event) {
+			return new Response('Error occured', { status: 400 })
+		}
+
+		switch (event.type) {
+			case 'organizationInvitation.accepted': // intentional fallthrough
+			case 'organizationInvitation.created':
+				await ctx.runMutation(internal.organizationInvitation.upsertFromClerk, {
+					data: event.data,
+				})
+				break
+
+			case 'organizationInvitation.revoked': {
+				const clerkOrgInvitationId = event.data.id!
+				await ctx.runMutation(internal.organizationInvitation.deleteFromClerk, {
+					clerkOrgInvitationId,
+				})
+				break
+			}
+			default:
+				console.log('Ignored Clerk webhook event', event.type)
+		}
+		return new Response(null, { status: 200 })
+	}),
+})
+
+http.route({
+	path: '/clerk-organization-memberships-webhook',
+	method: 'POST',
+	handler: httpAction(async (ctx, request) => {
+		const webhook = new Webhook(process.env.CLERK_WEBHOOK_ORG_MEMBERSHIP_SECRET!)
+		const event = await validateRequest(request, webhook)
+		if (!event) {
+			return new Response('Error occured', { status: 400 })
+		}
+
+		switch (event.type) {
+			case 'organizationMembership.created': // intentional fallthrough
+			case 'organizationMembership.updated':
+				await ctx.runMutation(internal.organizationMembership.upsertFromClerk, {
+					data: event.data,
+				})
+				break
+
+			case 'organizationMembership.deleted': {
+				const clerkMembershipId = event.data.id!
+				await ctx.runMutation(internal.organizationMembership.deleteFromClerk, {
+					clerkMembershipId,
+				})
+				break
+			}
+			default:
+				console.log('Ignored Clerk webhook event', event.type)
+		}
+		return new Response(null, { status: 200 })
+	}),
+})
+
+async function validateRequest(req: Request, webhook: Webhook): Promise<WebhookEvent | null> {
 	const payloadString = await req.text()
 	const svixHeaders = {
 		'svix-id': req.headers.get('svix-id')!,
@@ -74,7 +138,7 @@ async function validateRequest(req: Request, wh: Webhook): Promise<WebhookEvent 
 		'svix-signature': req.headers.get('svix-signature')!,
 	}
 	try {
-		return wh.verify(payloadString, svixHeaders) as WebhookEvent
+		return webhook.verify(payloadString, svixHeaders) as WebhookEvent
 	} catch (error) {
 		console.error('Error verifying webhook event', error)
 		return null

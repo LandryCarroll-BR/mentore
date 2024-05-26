@@ -40,7 +40,7 @@ export function OrganizationButton({
 				minHeight={'34px'}
 				width={'100vw'}
 				maxWidth={'200px'}
-				className="[&_.cl-rootBox]:!w-full [&_.cl-organizationSwitcherTriggerIcon]:!ml-auto [&_.cl-organizationSwitcherTrigger]:!border-sage-6 [&_.cl-organizationSwitcherTrigger]:!border [&_.cl-organizationSwitcherTrigger]:!py-1.5"
+				className="[&_.cl-rootBox]:!w-full [&_.cl-organizationSwitcherTriggerIcon]:!ml-auto [&_.cl-organizationSwitcherTrigger]:!border-gray-6 [&_.cl-organizationSwitcherTrigger]:!border [&_.cl-organizationSwitcherTrigger]:!py-1.5 [&_.cl-organizationSwitcherTrigger]:!text-gray-11"
 			>
 				<OrganizationSwitcher
 					hidePersonal
@@ -51,7 +51,7 @@ export function OrganizationButton({
 					afterSelectPersonalUrl={afterSelectPersonalUrl}
 					appearance={{
 						elements: {
-							button: {
+							organizationSwitcherTrigger: {
 								minWidth: '100% !important',
 								justifyContent: 'flex-start !important',
 							},

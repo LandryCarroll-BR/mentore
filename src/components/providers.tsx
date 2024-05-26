@@ -7,7 +7,7 @@ import { ConvexProviderWithClerk } from 'convex/react-clerk'
 
 export function ClerkProviders({ children }: { children: React.ReactNode }) {
 	return (
-		<ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY as string}>
+		<ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
 			<ConvexClerkProvider>{children}</ConvexClerkProvider>
 		</ClerkProvider>
 	)

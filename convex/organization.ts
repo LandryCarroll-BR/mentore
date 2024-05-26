@@ -1,6 +1,13 @@
-import { internalMutation, query, QueryCtx } from './_generated/server'
+import { internalMutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { OrganizationJSON } from '@clerk/backend'
 import { v, Validator } from 'convex/values'
+import { Doc, Id } from './_generated/dataModel'
+import { createClerkClient } from '@clerk/backend'
+
+export const clerk = createClerkClient({
+	secretKey: 'sk_test_Y0FomNbUiTfoxoOyxt58p1vvhwDZajlZIqj9VHSCth',
+	publishableKey: 'whsec_aAmj29CQObb+FY5E9aMroEmRZQN3uC62',
+})
 
 export const current = query({
 	handler: async (ctx) => {
@@ -14,7 +21,9 @@ export const upsertFromClerk = internalMutation({
 		const orgAttributes = {
 			name: data.name,
 			externalId: data.id,
-		}
+			imageUrl: data.image_url,
+			slug: data.slug,
+		} satisfies Omit<Doc<'organizations'>, '_id' | '_creationTime'>
 
 		const org = await orgByExternalId(ctx, data.id)
 		if (org === null) {
@@ -57,4 +66,46 @@ export async function orgByExternalId(ctx: QueryCtx, externalId: string) {
 		.query('organizations')
 		.withIndex('byExternalId', (q) => q.eq('externalId', externalId))
 		.unique()
+}
+
+export async function orgInvitationByExternalId(ctx: QueryCtx, externalId: string) {
+	return await ctx.db
+		.query('organizationInvitations')
+		.withIndex('byExternalId', (q) => q.eq('externalId', externalId))
+		.unique()
+}
+
+export const getOrganizationByid = query({
+	args: { id: v.id('organizations') },
+	handler: async (ctx, { id }) => {
+		return await ctx.db.get(id)
+	},
+})
+
+export const getByExternalId = query({
+	args: { externalId: v.string() },
+	handler: async (ctx, { externalId }) => {
+		return await orgByExternalId(ctx, externalId)
+	},
+})
+
+export const getAllOrganizations = query({
+	handler: async (ctx) => {
+		return await ctx.db.query('organizations').collect()
+	},
+})
+
+export async function getOrganizationAdmin(externalId: string) {
+	const users = await clerk.organizations.getOrganizationMembershipList({
+		organizationId: externalId,
+	})
+	console.log(users)
+}
+
+export async function getOrganizationExternalId(
+	ctx: MutationCtx,
+	organizationId: Id<'organizations'>
+) {
+	const org = await ctx.db.get(organizationId)
+	return org?.externalId
 }

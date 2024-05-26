@@ -19,7 +19,7 @@ export default function RootLayout({
 		<ClerkProviders>
 			<html lang="en">
 				<body>
-					<Theme accentColor="jade" radius="large">
+					<Theme accentColor="jade" radius="large" appearance="light">
 						{children}
 					</Theme>
 				</body>

@@ -10,11 +10,13 @@ import { redirect, useRouter } from 'next/navigation'
 export function Authenticated({
 	children,
 	allowedRoles,
-}: PropsWithChildren<{ allowedRoles?: Role[] }>) {
+	personalOnly,
+}: PropsWithChildren<{ allowedRoles?: Role[]; personalOnly?: boolean }>) {
 	const { isLoading, isAuthenticated } = useConvexAuth()
 	const user = useAuth()
 	if (allowedRoles && !allowedRoles.includes(user.orgRole as Role)) return null
-	if (!isLoading && !isAuthenticated) redirect('/sign-in')
+	if (personalOnly && user.orgId) return null
+	if (!isLoading && !isAuthenticated) return null
 	return <Skeleton loading={isLoading}>{user && children}</Skeleton>
 }
 

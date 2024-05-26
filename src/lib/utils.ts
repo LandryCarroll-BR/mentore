@@ -8,4 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 export enum Role {
 	Admin = 'org:admin',
 	Mentor = 'org:mentor',
+	Applicant = 'org:applicant',
+	Reference = 'org:reference',
 }
