@@ -68,6 +68,10 @@ export default async function Home() {
 						</Box>
 					</Grid>
 				</Authenticated>
+
+				<Authenticated allowedRoles={[Role.Mentor]}>
+					<Heading as="h1">Overview</Heading>
+				</Authenticated>
 			</Container>
 		</main>
 	)

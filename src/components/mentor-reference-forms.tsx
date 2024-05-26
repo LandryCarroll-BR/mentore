@@ -1,6 +1,6 @@
 import { api } from '@/convex/_generated/api'
 import { auth, currentUser } from '@clerk/nextjs/server'
-import { CheckIcon, EyeOpenIcon } from '@radix-ui/react-icons'
+import { CheckIcon } from '@radix-ui/react-icons'
 import { Dialog, Button, Card, Flex, Grid, Heading, Text, DataList, Badge } from '@radix-ui/themes'
 import { fetchQuery } from 'convex/nextjs'
 import { MentorReferenceform } from './organization-sign-up-form'
