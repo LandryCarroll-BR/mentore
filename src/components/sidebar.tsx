@@ -7,33 +7,40 @@ import { DashboardIcon, EnvelopeClosedIcon, HamburgerMenuIcon } from '@radix-ui/
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { Role, cn } from '@/lib/utils'
+import { Authenticated } from './authenticated'
 
 export function SidebarMenu() {
 	const pathname = usePathname()
 	const isActive = (path: string) => pathname === path
 	const links = [
 		{ href: '/dashboard', icon: <DashboardIcon />, label: 'Overview' },
-		// { href: '/dashboard/invitations', icon: <EnvelopeClosedIcon />, label: 'Invitations' },
+		{
+			href: '/dashboard/applications',
+			icon: <EnvelopeClosedIcon />,
+			label: 'Applications',
+			allowedRoles: [Role.Admin],
+		},
 	]
 	return (
 		<>
 			{links.map((link) => (
-				<Button
-					key={link.href}
-					variant="soft"
-					color="gray"
-					className={cn(
-						'justify-start',
-						!isActive(link.href) && 'bg-transparent hover:bg-accent-3'
-					)}
-					asChild
-				>
-					<Link href={link.href}>
-						{link.icon}
-						{link.label}
-					</Link>
-				</Button>
+				<Authenticated key={link.href} allowedRoles={link.allowedRoles}>
+					<Button
+						variant="soft"
+						color="gray"
+						className={cn(
+							'justify-start',
+							!isActive(link.href) && 'bg-transparent hover:bg-accent-3'
+						)}
+						asChild
+					>
+						<Link href={link.href}>
+							{link.icon}
+							{link.label}
+						</Link>
+					</Button>
+				</Authenticated>
 			))}
 		</>
 	)

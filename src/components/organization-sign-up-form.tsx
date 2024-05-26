@@ -13,7 +13,7 @@ import {
 	TextArea,
 	TextField,
 } from '@radix-ui/themes'
-import { Id } from '@/convex/_generated/dataModel'
+import { Doc, Id } from '@/convex/_generated/dataModel'
 import { sendInvitation, updateSignUpForm } from '@/actions'
 import { useAction } from 'next-safe-action/hooks'
 import { organizationSchema, updateMentorSignUpFormSchema } from '@/actions/schemas'
@@ -179,58 +179,27 @@ const OrganizationSignUpform = ({ organizationId }: { organizationId: Id<'organi
 	)
 }
 
-const MentorReferenceform = ({ signUpFormId }: { signUpFormId: Id<'mentorSignUpForms'> }) => {
+const MentorReferenceform = ({ form }: { form: Doc<'mentorSignUpForms'> }) => {
 	const user = useUser()
 	const { execute, status } = useAction(updateSignUpForm)
 	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		if (!user.user?.primaryEmailAddress?.emailAddress) return
 		const data = Object.fromEntries(new FormData(event.currentTarget))
-		const payload = { ...data, signUpFormId }
+		const payload = { ...data, signUpFormId: form._id }
 		console.log(payload)
 		const parsedData = updateMentorSignUpFormSchema.parse(payload)
 		execute({ ...parsedData })
 	}
 	return (
 		<Form.Root onSubmit={onSubmit}>
-			<Grid columns={'2'} gap={'4'}>
+			<Grid columns={'1'} gap={'4'}>
 				{status === 'hasSucceeded' && (
-					<Box gridColumn={'1/3'} minHeight={'520px'}>
-						<Heading as="h2" size={'4'} mb={'6'} align={'center'} wrap={'balance'}>
-							Thank you for your interest in becoming a mentor.
-						</Heading>
-						<Text>
-							<ol className="list-decimal space-y-7">
-								<li className="ml-4">
-									<strong>Confirmation Email:</strong> You will receive an email shortly with an
-									invitation to join our organization. Please follow the instructions in the email
-									to set up your account.
-								</li>
-								<li className="ml-4">
-									<strong>Check Your Application Status:</strong> Once logged in, you can easily
-									check the status of your application and receive updates directly through our
-									platform.
-								</li>
-								<li className="ml-4">
-									<strong>Reference Invitation:</strong> We have also sent an invitation to your
-									reference to join our community. They will be prompted to create an account and
-									complete a reference form to support your application.
-								</li>
-							</ol>
-						</Text>
-						<Callout.Root mt={'7'} size={'3'}>
-							<Callout.Text>
-								<Flex direction={'column'} gap={'3'}>
-									<Heading as="h3" size={'3'}>
-										Get Started Right Away!
-									</Heading>
-									<Text mb={'2'}>
-										Ready to dive in? Log in to your account and begin exploring what&apos;s next.
-										Stay connected, stay informed, and prepare to make a difference!
-									</Text>
-									<Button>Log in to your account</Button>
-								</Flex>
-							</Callout.Text>
+					<Box gridColumn={'1/3'}>
+						<Callout.Root>
+							<Heading as="h2" size={'4'} align={'center'} wrap={'balance'}>
+								Thank you for your submitting your reference.
+							</Heading>
 						</Callout.Root>
 					</Box>
 				)}
@@ -257,7 +226,7 @@ const MentorReferenceform = ({ signUpFormId }: { signUpFormId: Id<'mentorSignUpF
 						<Box gridColumn={'1/3'} asChild>
 							<Form.Submit asChild>
 								<Button size={'3'} loading={status === 'executing'}>
-									Sign Up
+									Submit
 								</Button>
 							</Form.Submit>
 						</Box>

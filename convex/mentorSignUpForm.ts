@@ -1,5 +1,6 @@
 import { mutation, query } from './_generated/server'
 import { v } from 'convex/values'
+import { orgByExternalId } from './organization'
 
 export const insert = mutation({
 	args: {
@@ -33,22 +34,14 @@ export const patch = mutation({
 	},
 })
 
-export const getByEmail = query({
-	args: { email: v.string() },
-	handler: async (ctx, { email }) => {
+export const getByOrganization = query({
+	args: { externalOrgId: v.string() },
+	handler: async (ctx, { externalOrgId }) => {
+		const org = await orgByExternalId(ctx, externalOrgId)
+		if (!org?._id) return []
 		return await ctx.db
 			.query('mentorSignUpForms')
-			.withIndex('byEmail', (q) => q.eq('email', email))
-			.collect()
-	},
-})
-
-export const getByReferenceEmail = query({
-	args: { referenceEmail: v.string() },
-	handler: async (ctx, { referenceEmail }) => {
-		return await ctx.db
-			.query('mentorSignUpForms')
-			.withIndex('byReferenceEmail', (q) => q.eq('referenceEmail', referenceEmail))
+			.withIndex('byOrganizationId', (q) => q.eq('organizationId', org._id))
 			.collect()
 	},
 })
