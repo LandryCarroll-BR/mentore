@@ -3,7 +3,12 @@
 import { Box, Button, Flex, Popover } from '@radix-ui/themes'
 import { OrganizationButton } from '@/components/auth-buttons'
 import { Icons } from '@/components/icons'
-import { DashboardIcon, EnvelopeClosedIcon, HamburgerMenuIcon } from '@radix-ui/react-icons'
+import {
+	DashboardIcon,
+	EnvelopeClosedIcon,
+	HamburgerMenuIcon,
+	RocketIcon,
+} from '@radix-ui/react-icons'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -21,7 +26,14 @@ export function SidebarMenu() {
 			label: 'Applications',
 			allowedRoles: [Role.Admin],
 		},
+		{
+			href: '/dashboard/assessments',
+			icon: <RocketIcon />,
+			label: 'Assessments',
+			allowedRoles: [Role.Admin, Role.Mentor],
+		},
 	]
+
 	return (
 		<>
 			{links.map((link) => (

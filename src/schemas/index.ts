@@ -1,3 +1,4 @@
+import { v } from 'convex/values'
 import { z } from 'zod'
 
 export const organizationSchema = z.object({

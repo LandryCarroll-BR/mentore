@@ -1,4 +1,4 @@
-import { internalMutation, query, QueryCtx } from './_generated/server'
+import { ActionCtx, internalMutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { UserJSON } from '@clerk/backend'
 import { v, Validator } from 'convex/values'
 
@@ -56,7 +56,7 @@ export async function getCurrentUser(ctx: QueryCtx) {
 	return await userByExternalId(ctx, identity.subject)
 }
 
-export async function userByExternalId(ctx: QueryCtx, externalId: string) {
+export async function userByExternalId(ctx: QueryCtx | MutationCtx, externalId: string) {
 	return await ctx.db
 		.query('users')
 		.withIndex('byExternalId', (q) => q.eq('externalId', externalId))

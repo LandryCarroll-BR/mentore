@@ -1,4 +1,4 @@
-import { internalMutation, MutationCtx, query, QueryCtx } from './_generated/server'
+import { ActionCtx, internalMutation, MutationCtx, query, QueryCtx } from './_generated/server'
 import { OrganizationJSON } from '@clerk/backend'
 import { v, Validator } from 'convex/values'
 import { Doc, Id } from './_generated/dataModel'

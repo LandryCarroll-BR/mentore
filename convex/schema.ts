@@ -60,6 +60,28 @@ export default defineSchema(
 			.index('byOrganizationId', ['organizationId'])
 			.index('byEmail', ['email'])
 			.index('byReferenceEmail', ['referenceEmail']),
+		assessments: defineTable({
+			title: v.string(),
+			description: v.optional(v.string()),
+			organizationId: v.id('organizations'),
+			passingScore: v.optional(v.number()),
+		}).index('byOrganizationId', ['organizationId']),
+		userAssessments: defineTable({
+			assessmentId: v.id('assessments'),
+			userId: v.id('users'),
+		}).index('byUserId', ['userId']),
+		questions: defineTable({
+			assessmentId: v.id('assessments'),
+			youtubeUrl: v.optional(v.string()),
+			description: v.optional(v.string()),
+			title: v.string(),
+			choices: v.array(
+				v.object({
+					title: v.string(),
+					isCorrect: v.boolean(),
+				})
+			),
+		}).index('byAssessmentId', ['assessmentId']),
 	},
 
 	// If you ever get an error about schema mismatch

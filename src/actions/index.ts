@@ -6,28 +6,9 @@ import { clerk } from '@/lib/clerk'
 import { fetchMutation, fetchQuery } from 'convex/nextjs'
 
 import { action } from '@/lib/safe-action'
-import { z } from 'zod'
-import {
-	organizationSchema,
-	switchOrganizqationSchema,
-	updateMentorSignUpFormSchema,
-} from './schemas'
+import { organizationSchema, updateMentorSignUpFormSchema } from '@/schemas'
 import { Role } from '@/lib/utils'
-
-// This schema is used to validate input from client.
-const schema = z.object({
-	username: z.string().min(3).max(10),
-	password: z.string().min(8).max(100),
-})
-
-export const loginUser = action(schema, async ({ username, password }) => {
-	if (username === 'johndoe' && password === '123456') {
-		return {
-			success: 'Successfully logged in',
-		}
-	}
-	return { failure: 'Incorrect credentials' }
-})
+import { revalidatePath } from 'next/cache'
 
 export const sendInvitation = action(
 	organizationSchema,
@@ -63,6 +44,7 @@ export const sendInvitation = action(
 			message,
 			referenceEmail,
 		})
+		revalidatePath('/organization/[id]')
 	}
 )
 
@@ -74,9 +56,6 @@ export const updateSignUpForm = action(
 			isComplete: true,
 			referenceResponse,
 		})
+		revalidatePath('/dashboard/applications')
 	}
 )
-
-// export const switchOrganization = action(switchOrganizqationSchema, async ({ externalOrganizationId }) => {
-// 	await clerk.organizations.({ externalOrganizationId })
-// })

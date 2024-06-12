@@ -16,7 +16,7 @@ import {
 import { Doc, Id } from '@/convex/_generated/dataModel'
 import { sendInvitation, updateSignUpForm } from '@/actions'
 import { useAction } from 'next-safe-action/hooks'
-import { organizationSchema, updateMentorSignUpFormSchema } from '@/actions/schemas'
+import { organizationSchema, updateMentorSignUpFormSchema } from '@/schemas'
 import { useUser } from '@clerk/clerk-react'
 
 const OrganizationSignUpform = ({ organizationId }: { organizationId: Id<'organizations'> }) => {
