@@ -4,6 +4,7 @@ import { v, Validator } from 'convex/values'
 import { Doc } from './_generated/dataModel'
 import { userByExternalId } from './user'
 import { orgByExternalId } from './organization'
+import { queryWithZod } from './utils/builders'
 
 export async function orgMembershipByExternalId(ctx: QueryCtx, externalId: string) {
 	return await ctx.db
@@ -67,14 +68,12 @@ export const deleteFromClerk = internalMutation({
 	},
 })
 
-export const getOrgMembershipsByUser = query({
-	args: { externalUserId: v.string() },
-	async handler(ctx, { externalUserId }) {
-		const user = await userByExternalId(ctx, externalUserId)
-		if (!user) return
+export const getOrgMembershipsByUser = queryWithZod({
+	args: {},
+	async handler(ctx) {
 		return await ctx.db
 			.query('organizationMemberships')
-			.withIndex('byUserId', (q) => q.eq('userId', user?._id))
+			.withIndex('byUserId', (q) => q.eq('userId', ctx.user._id))
 			.collect()
 	},
 })

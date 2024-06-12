@@ -1,6 +1,7 @@
 import { mutation, query } from './_generated/server'
 import { v } from 'convex/values'
 import { orgByExternalId } from './organization'
+import { queryWithZod } from './utils/builders'
 
 export const insert = mutation({
 	args: {
@@ -34,14 +35,12 @@ export const patch = mutation({
 	},
 })
 
-export const getByOrganization = query({
-	args: { externalOrgId: v.string() },
-	handler: async (ctx, { externalOrgId }) => {
-		const org = await orgByExternalId(ctx, externalOrgId)
-		if (!org?._id) return []
+export const getByOrganization = queryWithZod({
+	args: {},
+	handler: async (ctx) => {
 		return await ctx.db
 			.query('mentorSignUpForms')
-			.withIndex('byOrganizationId', (q) => q.eq('organizationId', org._id))
+			.withIndex('byOrganizationId', (q) => q.eq('organizationId', ctx.organization._id))
 			.collect()
 	},
 })

@@ -16,7 +16,6 @@ export async function generateStaticParams() {
 type Params = { id: Id<'organizations'> }
 
 export default async function OrganizationDetailsPage({ params }: { params: Params }) {
-	const organization = await fetchQuery(api.organization.getOrganizationByid, { id: params.id })
 	return (
 		<main>
 			<Container>

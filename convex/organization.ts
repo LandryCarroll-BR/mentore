@@ -3,6 +3,7 @@ import { OrganizationJSON } from '@clerk/backend'
 import { v, Validator } from 'convex/values'
 import { Doc, Id } from './_generated/dataModel'
 import { createClerkClient } from '@clerk/backend'
+import { queryWithZod } from './utils/builders'
 
 export const clerk = createClerkClient({
 	secretKey: 'sk_test_Y0FomNbUiTfoxoOyxt58p1vvhwDZajlZIqj9VHSCth',
@@ -79,6 +80,13 @@ export const getOrganizationByid = query({
 	args: { id: v.id('organizations') },
 	handler: async (ctx, { id }) => {
 		return await ctx.db.get(id)
+	},
+})
+
+export const getCurrentOrganization = queryWithZod({
+	args: {},
+	handler: async (ctx) => {
+		return ctx.organization
 	},
 })
 

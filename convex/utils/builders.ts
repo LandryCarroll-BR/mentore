@@ -11,7 +11,6 @@ export const queryWithZod = <Args extends { [key: string]: z.ZodTypeAny }, Retur
 	) => Promise<Returns>
 }) => {
 	return query(async (ctx, args: z.input<z.ZodObject<Args>>) => {
-		console.log(await ctx.auth.getUserIdentity())
 		const user = await ctx.auth.getUserIdentity()
 		if (!user) throw new Error('User Identity not found')
 

@@ -1,17 +1,13 @@
+'use client'
+
 import { api } from '@/convex/_generated/api'
-import { auth } from '@clerk/nextjs/server'
 import { Card } from '@radix-ui/themes'
-import { fetchQuery } from 'convex/nextjs'
+import { useQuery } from 'convex/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
-export async function OrganizationLink({ children }: { children?: ReactNode }) {
-	const user = auth()
-
-	if (!user?.orgId) return
-	const org = await fetchQuery(api.organization.getByExternalId, {
-		externalId: user.orgId,
-	})
+export function OrganizationLink({ children }: { children?: ReactNode }) {
+	const org = useQuery(api.organization.getCurrentOrganization)
 
 	return (
 		<Link href={`organization/${org?._id}`}>

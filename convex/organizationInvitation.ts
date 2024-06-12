@@ -3,6 +3,8 @@ import { OrganizationInvitationJSON } from '@clerk/backend'
 import { v, Validator } from 'convex/values'
 import { Doc } from './_generated/dataModel'
 import { orgByExternalId } from './organization'
+import { queryWithZod } from './utils/builders'
+import { zid } from 'convex-helpers/server/zod'
 
 export async function orgInvitationByExternalId(ctx: QueryCtx, externalId: string) {
 	return await ctx.db
@@ -53,17 +55,22 @@ export const deleteFromClerk = internalMutation({
 	},
 })
 
-export const getInvitationsByUserEmail = query({
-	args: { email: v.string() },
-	handler(ctx, { email }) {
+export const getInvitationsByUserEmail = queryWithZod({
+	args: {},
+	async handler(ctx) {
+		const user = await ctx.auth.getUserIdentity()
+		const email = user?.email
+		if (!email) throw new Error('User has no email')
+
 		return ctx.db
 			.query('organizationInvitations')
 			.withIndex('byEmail', (q) => q.eq('email', email))
 			.collect()
 	},
 })
-export const getInvitationById = query({
-	args: { id: v.id('organizationInvitations') },
+
+export const getInvitationById = queryWithZod({
+	args: { id: zid('organizationInvitations') },
 	handler(ctx, { id }) {
 		return ctx.db.get(id)
 	},

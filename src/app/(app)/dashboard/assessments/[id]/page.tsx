@@ -6,7 +6,6 @@ import { Authenticated } from '@/components/authenticated'
 type Params = { id: Id<'assessments'> }
 
 export default async function AssessmentDetailsPage({ params }: { params: Params }) {
-	// const organization = await fetchQuery(api.assessments, { id: params.id })
 	return (
 		<main>
 			{params.id}
