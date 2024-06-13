@@ -1,25 +1,10 @@
 import { Authenticated } from '@/components/authenticated'
 import { OrganizationLink } from '@/components/organization-link'
-import { MentorReferenceform } from '@/components/organization-sign-up-form'
 import { MentorFormStatus } from '@/components/mentor-form-status'
-import { api } from '@/convex/_generated/api'
 import { Role } from '@/lib/utils'
 import { OrganizationList } from '@clerk/nextjs'
-import { auth, currentUser } from '@clerk/nextjs/server'
-import { CheckIcon } from '@radix-ui/react-icons'
-import {
-	Badge,
-	Box,
-	Button,
-	Card,
-	Container,
-	Dialog,
-	Flex,
-	Grid,
-	Heading,
-	Text,
-} from '@radix-ui/themes'
-import { Suspense } from 'react'
+import { currentUser } from '@clerk/nextjs/server'
+import { Box, Container, Flex, Grid, Heading, Text } from '@radix-ui/themes'
 import { MentorReferenceForms } from '@/components/mentor-reference-forms'
 
 export default async function Home() {
@@ -41,9 +26,7 @@ export default async function Home() {
 					<Heading as="h1" mb={'4'}>
 						{greeting}
 					</Heading>
-					<Suspense>
-						<MentorFormStatus />
-					</Suspense>
+					<MentorFormStatus />
 				</Authenticated>
 
 				<Authenticated allowedRoles={[Role.Reference]}>
@@ -53,18 +36,14 @@ export default async function Home() {
 					<Heading as="h2" size="2" mb={'2'}>
 						References to Submit
 					</Heading>
-					<Suspense>
-						<MentorReferenceForms byCurrentUserEmail />
-					</Suspense>
+					<MentorReferenceForms />
 				</Authenticated>
 
 				<Authenticated allowedRoles={[Role.Admin]}>
 					<Heading as="h1">Overview</Heading>
 					<Grid columns={'2'} my={'4'} gap={'4'}>
 						<Box>
-							<Suspense>
-								<OrganizationLink>Sign Up Form</OrganizationLink>
-							</Suspense>
+							<OrganizationLink>Sign Up Form</OrganizationLink>
 						</Box>
 					</Grid>
 				</Authenticated>

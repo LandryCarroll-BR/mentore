@@ -33,9 +33,7 @@ export default async function Home() {
 					<Heading as="h1" mb={'4'}>
 						Invitations
 					</Heading>
-					<Suspense>
-						<MentorReferenceForms />
-					</Suspense>
+					<MentorReferenceForms />
 				</Authenticated>
 			</Container>
 		</main>

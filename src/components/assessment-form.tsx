@@ -36,13 +36,13 @@ export function AssessmentForm() {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)}>
-				<Grid columns={'2'} gap={'4'}>
-					<Box gridColumn={'1/2'} asChild>
+				<Grid columns={'2'} gap="4">
+					<Box gridColumn={'1/2'}>
 						<FormField
 							control={form.control}
 							name="title"
 							render={({ field }) => (
-								<Flex justify={'between'} mb={'1'}>
+								<Flex direction={'column'} justify={'between'} gap={'2'}>
 									<FormLabel asChild>
 										<Text size={'2'}>Title</Text>
 									</FormLabel>
@@ -53,12 +53,12 @@ export function AssessmentForm() {
 							)}
 						/>
 					</Box>
-					<Box gridColumn={'1/2'} asChild>
+					<Box gridColumn={'1/2'}>
 						<FormField
 							control={form.control}
 							name="passingScore"
 							render={({ field }) => (
-								<Flex justify={'between'} mb={'1'}>
+								<Flex direction={'column'} justify={'between'} gap={'2'}>
 									<FormLabel asChild>
 										<Text size={'2'}>Passing Score</Text>
 									</FormLabel>
@@ -69,12 +69,12 @@ export function AssessmentForm() {
 							)}
 						/>
 					</Box>
-					<Box gridColumn={'1/3'} asChild>
+					<Box gridColumn={'1/3'}>
 						<FormField
 							control={form.control}
 							name="description"
 							render={({ field }) => (
-								<Flex justify={'between'} mb={'1'}>
+								<Flex direction={'column'} justify={'between'} gap={'2'}>
 									<FormLabel asChild>
 										<Text size={'2'}>Description</Text>
 									</FormLabel>
@@ -85,7 +85,7 @@ export function AssessmentForm() {
 							)}
 						/>
 					</Box>
-					<Box gridColumn={'1/3'} asChild>
+					<Box gridColumn={'1/2'}>
 						<Button type="submit" size={'3'} loading={form.formState.isSubmitting}>
 							Create Assessment
 						</Button>

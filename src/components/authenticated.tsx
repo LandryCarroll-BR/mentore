@@ -6,6 +6,7 @@ import { Skeleton } from '@radix-ui/themes'
 import { useConvexAuth } from 'convex/react'
 import { PropsWithChildren } from 'react'
 import { redirect, useRouter } from 'next/navigation'
+import { Authenticated as ConvexAuthenticated } from 'convex/react'
 
 export function Authenticated({
 	children,
@@ -37,3 +38,5 @@ export function OrgControl({
 	if (!isLoading && user.orgId) return redirect(afterOrganizationUrl)
 	return <Skeleton loading={isLoading}>{!user.orgId && children}</Skeleton>
 }
+
+export { ConvexAuthenticated }

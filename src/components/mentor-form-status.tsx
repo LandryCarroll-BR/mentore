@@ -1,9 +1,8 @@
 'use client'
 
 import { api } from '@/convex/_generated/api'
-import { auth, currentUser } from '@clerk/nextjs/server'
 import { Badge, Box, Card, DataList, Grid, Text } from '@radix-ui/themes'
-import { useQueries, useQuery } from 'convex/react'
+import { useQuery } from 'convex/react'
 
 export function MentorFormStatus() {
 	const referenceForms = useQuery(api.mentorSignUpForm.getByOrganization)

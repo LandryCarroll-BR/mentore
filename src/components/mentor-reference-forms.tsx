@@ -8,7 +8,7 @@ import { Authenticated } from './authenticated'
 import { Role } from '@/lib/utils'
 import { useQuery } from 'convex/react'
 
-export function MentorReferenceForms({ byCurrentUserEmail }: { byCurrentUserEmail?: boolean }) {
+export function MentorReferenceForms() {
 	const referenceForms = useQuery(api.mentorSignUpForm.getByOrganization)
 	if (!referenceForms) return null
 	return (
