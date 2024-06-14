@@ -15,7 +15,7 @@ export default async function AssessmentsPage() {
 					<Heading as="h1" mb={'4'}>
 						Assessments
 					</Heading>
-					<Assessments externalOrganizationId={session.orgId} />
+					<Assessments />
 				</Authenticated>
 			</Container>
 		</main>

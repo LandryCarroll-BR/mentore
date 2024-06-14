@@ -8,7 +8,6 @@ type Params = { id: Id<'assessments'> }
 export default async function AssessmentDetailsPage({ params }: { params: Params }) {
 	return (
 		<main>
-			{params.id}
 			<Container>
 				<Authenticated allowedRoles={[Role.Admin]}>
 					<Heading as="h1" mb={'4'}>

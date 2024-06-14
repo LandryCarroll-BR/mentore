@@ -1,13 +1,12 @@
 'use client'
 
 import { api } from '@/convex/_generated/api'
-import { Box, Button, Dialog, Flex } from '@radix-ui/themes'
+import { Box, Button, Card, Dialog, Flex, Grid, Heading, Link, Text } from '@radix-ui/themes'
 import { AssessmentForm } from './assessment-form'
 import { useQuery } from 'convex/react'
 
 export function Assessments() {
 	const assessments = useQuery(api.assessments.findManyByOrgId)
-	if (!assessments) return <div>Loading...</div>
 
 	const assessmentDialog = (
 		<Dialog.Root>
@@ -20,7 +19,7 @@ export function Assessments() {
 		</Dialog.Root>
 	)
 
-	if (assessments.length === 0)
+	if (assessments?.length === 0)
 		return (
 			<Flex
 				className="border-2 border-dashed border-gray-5 rounded-lg"
@@ -36,9 +35,21 @@ export function Assessments() {
 		)
 
 	return (
-		<div>
-			{JSON.stringify(assessments)}
-			{assessmentDialog}
-		</div>
+		<Grid gap={'3'} columns={'3'}>
+			{assessments?.map((assessment) => (
+				<Box key={assessment._id} maxWidth="350px">
+					<Card asChild>
+						<Link href={`/dashboard/assessments/${assessment._id}`}>
+							<Text as="div" size="2" weight="bold">
+								{assessment.title}
+							</Text>
+							<Text as="div" color="gray" size="2">
+								{assessment.description}
+							</Text>
+						</Link>
+					</Card>
+				</Box>
+			))}
+		</Grid>
 	)
 }

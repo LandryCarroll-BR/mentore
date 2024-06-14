@@ -1,6 +1,6 @@
 import { UserIdentity } from 'convex/server'
 import { Doc } from '../_generated/dataModel'
-import { MutationCtx, QueryCtx } from '../_generated/server'
+import { ActionCtx, MutationCtx, QueryCtx } from '../_generated/server'
 import { orgByExternalId } from '../organization'
 import { userByExternalId } from '../user'
 
